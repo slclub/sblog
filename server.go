@@ -2,17 +2,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"sblog/core/dispatcher"
+	_ "sblog/admin"
+	_ "sblog/app"
+	"sblog/core/gin"
 )
 
 var print = fmt.Println
 
 func main() {
-	r := gin.Default()
-	di := dispatcher.New()
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{})
-	})
+	r := gin.Route()
 	r.Run(":8001")
 }

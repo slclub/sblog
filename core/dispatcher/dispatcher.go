@@ -5,51 +5,72 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//Param type
-type Context gin.Context
-
-//Inject function type
-type InjectFn func(c *Context)
 type LoopFuncs []*box
 
 //Dispatcher
 type dispatcher struct {
-	context       *Context
-	loop_func     map[int8]LoopFuncs
-	executedNames []string
+	loop_func   map[int8]LoopFuncs
+	GlobalNames []string
+	permission  *PermissionBox
 }
 
+//Inject function struct
 type box struct {
-	fn     InjectFn
+	fn     gin.HandlerFunc
 	name   string
 	status bool
 }
 
+//Injection function execution authority structure
+//Can be executed according to the specific route
+type PermissionBox struct {
+	Yes []string
+	No  []string
+}
+
 var print = fmt.Println
 
+var front *dispatcher
+var admin *dispatcher
+
+func Front() *dispatcher {
+	if front == nil {
+		front = New()
+	}
+	return front
+}
+func Admin() *dispatcher {
+	if admin == nil {
+		admin = New()
+	}
+	return admin
+}
+
 func New() *dispatcher {
-	return &dispatcher{&Context{}, map[int8]LoopFuncs{}, []string{}}
+	return &dispatcher{map[int8]LoopFuncs{}, []string{}, &PermissionBox{}}
 }
 
 //Can be rewritten from the outside world
-//Example: dispatcher.HandleFunc = func(c *dispatcher.Context){}
-var HandleFunc InjectFn
+//Example: dispatcher.HandleFunc = func(c *dispatcher.gin.Context){}
+var HandleFunc gin.HandlerFunc
 
-func (di *dispatcher) D(c *Context) *dispatcher {
-	di.context = c
+func (di *dispatcher) D(c *gin.Context) *dispatcher {
 	return di
 }
 
 //Injection
-func (di *dispatcher) Di(fn InjectFn) InjectFn {
+func (di *dispatcher) Di(fn gin.HandlerFunc) gin.HandlerFunc {
 	//di.Bind(fn, ROUTE_FUNC)
-	return di.Handle(fn)
+	var ret = di.Handle(fn)
+	return ret
+}
+
+func Fine(c *gin.Context) {
 }
 
 //Organize the injected functions in order
-func (di *dispatcher) Handle(fn InjectFn) InjectFn {
-	HandleFunc = func(c *Context) {
-		c = di.context
+func (di *dispatcher) Handle(fn gin.HandlerFunc) gin.HandlerFunc {
+	HandleFunc = func(c *gin.Context) {
 		//Begin
 		di.Deal(c, BEGIN)
 		di.Deal(c, ROUTE_FUNC)
@@ -60,26 +81,68 @@ func (di *dispatcher) Handle(fn InjectFn) InjectFn {
 }
 
 //Bind function Binding function to the corresponding location
-func (di *dispatcher) Bind(name string, fn InjectFn, pos int8) {
+func (di *dispatcher) Bind(name string, fn gin.HandlerFunc, pos int8) *dispatcher {
 	Location := []int8{BEGIN, ROUTE_FUNC, END}
 	for _, l := range Location {
 		if l&pos <= 0 {
 			continue
 		}
-		di.loop_func[BEGIN].Push(name, fn)
+		di.loop_func[l] = append(di.loop_func[l], newBox(name, fn))
 	}
+
+	return di
 }
 
-func (di *dispatcher) Deal(c *Context, pos int8) {
+//Dispatcher factory.
+func (di *dispatcher) Deal(c *gin.Context, pos int8) {
 	for _, item := range di.loop_func[BEGIN] {
 		if item.status == false {
+			continue
+		}
+
+		//if inSlice(item.name, di.permission.Yes) == false {
+		//	continue
+		//}
+
+		if inSlice(item.name, di.permission.No) {
+			continue
 		}
 		item.fn(c)
 	}
 }
 
-//Push function to the inject queue.
-func (lf LoopFuncs) Push(name string, fn InjectFn) {
-	newBox := &box{fn, name, true}
-	lf = append(lf, newBox)
+//Set the permissions that can be executed by the injection function
+//Service for a single route path·
+func (di *dispatcher) Permission(yes []string, no []string) *dispatcher {
+	//di.permission.Yes = yes
+	di.permission.No = no
+	return di
+}
+
+//Relatively high operating authority.
+//Can Global permissions can be prevented from running
+//Service for a single route path·
+func (di *dispatcher) NotAllow(not []string) *dispatcher {
+	di.permission.No = not
+	return di
+}
+
+//Service for all routes
+func (di *dispatcher) GloblaAllowed(allowSlice []string) {
+	di.GlobalNames = append(di.GlobalNames, allowSlice...)
+}
+
+//The item param exist in the slice.
+func inSlice(item string, s []string) bool {
+	for _, v := range s {
+		if v == item {
+			return true
+		}
+	}
+	return false
+}
+
+//New box function to the inject queue.
+func newBox(name string, fn gin.HandlerFunc) *box {
+	return &box{fn, name, true}
 }
