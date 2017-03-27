@@ -4,12 +4,12 @@ import (
 	"fmt"
 	_ "sblog/admin"
 	_ "sblog/app"
-	"sblog/core/gin"
+	server "sblog/core/gin"
 )
 
 var print = fmt.Println
 
 func main() {
-	r := gin.Route()
+	r := server.Route()
 	r.Run(":8001")
 }

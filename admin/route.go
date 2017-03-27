@@ -24,10 +24,13 @@ var Index gin.HandlerFunc = func(c *gin.Context) {
 
 var adminSet gin.HandlerFunc = func(c *gin.Context) {
 	r.LoadHTMLGlob("templates/admin/*")
+	//r.StaticFS("/static", http.Dir("./static/*filepath"))
 	print("ad")
 }
 
 func init() {
 	diAdmin.Bind("tmp_admin", adminSet, 1)
+	r.Static("/static", ("./admin/static"))
+	r.StaticFile("/jquery.js", "./static/jquery-3.2.0.min.js")
 	r.GET("/sadmin/", diAdmin.Di(Index))
 }
