@@ -17,7 +17,7 @@ var Index gin.HandlerFunc = func(c *gin.Context) {
 	print("succuess")
 	//c.JSON(200, gin.H{"iwas": "fine thank you"})
 	c.HTML(http.StatusOK, "index.tmpl", gin.H{
-		"title":   "Mainwebsite",
+		"title":   "Sblog.admin",
 		"content": "Hello world",
 	})
 }
