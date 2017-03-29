@@ -8,18 +8,16 @@ import (
 )
 
 var r = server.Route()
-
 var diAdmin = dispatcher.Admin()
 
-//r.LoadHTMLGlob("templates/front/*")
+func init() {
+	diAdmin.Bind("tmp_admin", adminSet, 1)
+	r.Static("/static", ("./admin/static"))
+	r.StaticFile("/jquery.js", "./static/jquery-3.2.0.min.js")
+	r.Use(gin.Recovery())
 
-var Index gin.HandlerFunc = func(c *gin.Context) {
-	print("succuess")
-	//c.JSON(200, gin.H{"iwas": "fine thank you"})
-	c.HTML(http.StatusOK, "index.tmpl", gin.H{
-		"title":   "Sblog.admin",
-		"content": "Hello world",
-	})
+	r.GET("/sadmin/", diAdmin.Di(Index))
+	r.Any("/sadmin/post/save", diAdmin.Di(PostAdd))
 }
 
 var adminSet gin.HandlerFunc = func(c *gin.Context) {
@@ -28,9 +26,11 @@ var adminSet gin.HandlerFunc = func(c *gin.Context) {
 	print("ad")
 }
 
-func init() {
-	diAdmin.Bind("tmp_admin", adminSet, 1)
-	r.Static("/static", ("./admin/static"))
-	r.StaticFile("/jquery.js", "./static/jquery-3.2.0.min.js")
-	r.GET("/sadmin/", diAdmin.Di(Index))
+var Index gin.HandlerFunc = func(c *gin.Context) {
+	print("succuess")
+	//c.JSON(200, gin.H{"iwas": "fine thank you"})
+	c.HTML(http.StatusOK, "index.tmpl", gin.H{
+		"title":   "Sblog.admin",
+		"content": "Hello world",
+	})
 }

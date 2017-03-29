@@ -1,17 +1,22 @@
 package model
 
 type Modeli interface {
-	GetSource(string)
+	GetSource(...string) string
 
-	GetAttr()
+	GetAttr() []string
 
-	Save(*Modeli)
+	Save(Modeli)
 
-	Create(*Modeli)
+	Create(Modeli) (int, error)
 
 	Delete(string, ...interface{})
 
-	Update(string, ...interface{})
+	Update(Modeli, ...interface{})
 
 	Find(...interface{})
+
+	ID(...int) int
+
+	GetObjectValues(Modeli) []interface{}
+	GetObject() map[string]interface{}
 }

@@ -1,7 +1,5 @@
 /**
 
- layui官网
-
 */
 
 layui.define(['layer', 'code', 'form', 'element', 'util'], function(exports){
@@ -43,15 +41,15 @@ layui.define(['layer', 'code', 'form', 'element', 'util'], function(exports){
   //展示当前版本
   $('.site-showv').html(layui.v);
 
-   //获取下载数
-  $.get('http://fly.layui.com/api/handle?id=10&type=find', function(res){
-      $('.site-showdowns').html(res.number);
-  }, 'jsonp');
+  // //获取下载数
+  //$.get('http://fly.layui.com/api/handle?id=10&type=find', function(res){
+  //    $('.site-showdowns').html(res.number);
+  //}, 'jsonp');
 
-  //记录下载
-  $('.site-down').on('click',function(){
-      $.get('http://fly.layui.com/api/handle?id=10');
-  });
+  ////记录下载
+  //$('.site-down').on('click',function(){
+  //    $.get('http://fly.layui.com/api/handle?id=10');
+  //});
 
   //固定Bar
   util.fixbar({
