@@ -11,6 +11,8 @@ var PostAdd gin.HandlerFunc = func(c *gin.Context) {
 	m["p_id"] = c.Query("p_id")
 	m["c_id"] = c.Query("c_id")
 	m["uid"] = c.Query("uid")
+	m["content"] = c.Query("content")
+	m["title"] = c.Query("title")
 	post := &source.Post{}
 	post.Model = &model.Model{}
 	post.Assign(m)

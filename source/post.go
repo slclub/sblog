@@ -1,10 +1,12 @@
 package source
 
 import (
+	//"errors"
 	"fmt"
 	"sblog/core/model"
-	"sblog/db"
-	"strings"
+	//"sblog/db"
+	//"strings"
+	"time"
 )
 
 var print = fmt.Println
@@ -35,6 +37,7 @@ func (post *Post) GetSource(args ...string) string {
 }
 
 func (post *Post) Assign(param map[string]interface{}) {
+	post.Model.Assgin(param)
 	post.Object = param
 	//var okk interface{}
 	post.p_id, _ = post.GetInterValue("p_id", "int").(int)
@@ -61,17 +64,15 @@ func (post *Post) Save(value model.Modeli) {
 }
 
 func (post *Post) Create(value model.Modeli) (int, error) {
-	DB, _ := db.Open()
-	defer DB.Close()
-	attrs := post.GetAttr()
-	values := post.GetObjectValues(post)
-	print(post.Object, values)
-	_, err := DB.Exec("INSERT INTO "+post.GetSource()+" ("+strings.Join(post.GetAttr(), ",")+") values("+model.GetSqlPlaceholder(len(attrs))+")", values...)
-	if err != nil {
-		panic(err.Error() + "INsert error")
-	}
-	return 1, nil
+	return post.Model.Create(value)
+
 }
 
-func (post *Post) Update(value model.Modeli, args ...interface{}) {
+func (post *Post) Update(value model.Modeli, args ...interface{}) (ret int, err error) {
+	post.ObjectUpdate["modified_time"] = int(time.Now().Unix())
+	return post.Model.Update(value, args...)
+}
+
+func (post *Post) IDField(fld string) string {
+	return post.Model.IDField("p_id")
 }

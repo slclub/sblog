@@ -23,7 +23,6 @@ func init() {
 var adminSet gin.HandlerFunc = func(c *gin.Context) {
 	r.LoadHTMLGlob("templates/admin/*")
 	//r.StaticFS("/static", http.Dir("./static/*filepath"))
-	print("ad")
 }
 
 var Index gin.HandlerFunc = func(c *gin.Context) {
