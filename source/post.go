@@ -24,6 +24,13 @@ type Post struct {
 	modified_time int
 }
 
+func NewPost() *Post {
+	var Object = make(map[string]interface{})
+	var ObjectUpdate = make(map[string]interface{})
+	var limit = make(map[string]uint)
+	return &Post{&model.Model{Object, 0, ObjectUpdate, limit, ""}, 0, 0, 0, "", "", 0, "", 0, 0}
+}
+
 func (post *Post) GetAttr() (result []string) {
 
 	result = post.Model.GetAttr()
@@ -75,4 +82,31 @@ func (post *Post) Update(value model.Modeli, args ...interface{}) (ret int, err 
 
 func (post *Post) IDField(fld string) string {
 	return post.Model.IDField("p_id")
+}
+
+func (post *Post) Order() {
+	post.OrderSql = " order by sort desc,id asc "
+}
+
+func (post *Post) DataDecode(convertData interface{}) error {
+
+	post.Model.DataDecode(convertData)
+
+	dest, ok := convertData.(map[string]interface{})
+	if ok == false {
+		return nil
+	}
+
+	print(dest)
+	for index, val := range dest {
+		if val == nil {
+			continue
+		}
+		if index == "content" || index == "title" || index == "tags" {
+			print(index, val)
+			val = string(val.([]uint8))
+		}
+		dest[index] = val
+	}
+	return nil
 }

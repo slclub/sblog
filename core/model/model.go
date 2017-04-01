@@ -5,10 +5,15 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"sblog/db"
 	"strconv"
 	"strings"
 	"time"
+)
+
+const (
+	PAGE_SIZE = 10
 )
 
 var print = fmt.Println
@@ -18,6 +23,8 @@ type Model struct {
 	IDV    int
 	//changed attributes and values.
 	ObjectUpdate map[string]interface{}
+	LimitSql     map[string]uint
+	OrderSql     string
 }
 
 func (self *Model) GetSource(args ...string) string {
@@ -113,7 +120,61 @@ func (self *Model) Update(data Modeli, args ...interface{}) (ret int, err error)
 	return int(effectRows), nil
 }
 
-func (self *Model) Find(args ...interface{}) {
+func (self *Model) Find(data Modeli, where string, bindArr []interface{}) []interface{} {
+	DB, _ := db.Open()
+	defer DB.Close()
+	id := data.ID()
+	attrs := data.GetAttr()
+	lenAttr := len(attrs)
+
+	where = self.Where(where)
+
+	if len(bindArr) == 0 {
+		bindArr = append(bindArr, id)
+	}
+	if where == "" || bindArr == nil {
+		where = " " + data.IDField("") + ">?"
+	} else {
+		where = where
+	}
+	sel := strings.Join(attrs, ",")
+	limit := " limit " + strconv.Itoa(int(self.LimitSql["offset"])) + "," + strconv.Itoa(int(self.LimitSql["limit"]))
+	order := self.OrderSql
+
+	sql := "select " + sel + " from " + data.GetSource() + " WHERE " + where + " " + order + limit
+
+	rows, err := DB.Query(sql, bindArr...)
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+
+	ret := make([]interface{}, 0)
+	cols, err := rows.Columns()
+	getVals := make([]interface{}, len(cols))
+	getValsAddr := make([]interface{}, len(cols))
+	dest := make(map[string]interface{})
+
+	for i := 0; i < len(getVals); i++ {
+		addr := new(interface{})
+		getVals[i] = addr
+		getValsAddr[i] = &getVals[i]
+	}
+	for rows.Next() {
+		err := rows.Scan(getValsAddr...)
+		for i := 0; i < lenAttr; i++ {
+			dest[attrs[i]] = getVals[i]
+		}
+		data.DataDecode(dest)
+		if err != nil {
+			log.Fatal(err)
+			continue
+		}
+
+		ret = append(ret, dest)
+	}
+
+	return ret
 }
 
 func (self *Model) FindOne(args ...interface{}) {
@@ -228,6 +289,66 @@ func (self *Model) IDField(fld string) string {
 		fld = "id"
 	}
 	return fld
+}
+
+func (self *Model) Where(where string) string {
+	var ret string
+
+	ret = where
+	return ret
+}
+
+func (self *Model) Limit(offset, limit uint) Modeli {
+	if limit == 0 {
+		limit = PAGE_SIZE
+	}
+	self.LimitSql["offset"] = offset
+	self.LimitSql["limit"] = limit
+	return self
+}
+
+func (self *Model) Page(page uint, args ...uint) {
+	var limit uint = 0
+	if len(args) == 0 {
+		if self.LimitSql["limit"] == 0 {
+			limit = PAGE_SIZE
+			self.LimitSql["limit"] = PAGE_SIZE
+		} else {
+			limit = self.LimitSql["limit"]
+		}
+	} else {
+		limit = args[0]
+	}
+
+	if page == 0 {
+		page = 1
+	}
+
+	self.LimitSql["offset"] = (page - 1) * limit
+}
+
+func (self *Model) Order() Modeli {
+	self.OrderSql = ""
+	return self
+}
+
+func (self *Model) DataDecode(convertData interface{}) error {
+	dest, ok := convertData.(map[string]interface{})
+
+	if ok == false {
+		return nil
+	}
+
+	for index, val := range dest {
+		//vall := val.(**interface{})
+		if index == "created_time" || index == "modified_time" {
+			vint64 := (val).(int64)
+			dest[index] = time.Unix(vint64, 0).Format("2006-01-02 03:04:05 PM")
+			continue
+		}
+	}
+
+	return nil
 }
 
 //SQL 语句占位符

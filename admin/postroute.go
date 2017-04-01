@@ -2,8 +2,8 @@ package admin
 
 import (
 	"github.com/gin-gonic/gin"
-	"sblog/core/model"
 	"sblog/source"
+	"strconv"
 )
 
 var PostAdd gin.HandlerFunc = func(c *gin.Context) {
@@ -13,8 +13,16 @@ var PostAdd gin.HandlerFunc = func(c *gin.Context) {
 	m["uid"] = c.Query("uid")
 	m["content"] = c.Query("content")
 	m["title"] = c.Query("title")
-	post := &source.Post{}
-	post.Model = &model.Model{}
+	post := source.NewPost()
 	post.Assign(m)
 	post.Save(post)
+}
+
+var PostFind gin.HandlerFunc = func(c *gin.Context) {
+	post := source.NewPost()
+
+	v, _ := strconv.Atoi(c.Query("page"))
+	post.Page(uint(v))
+	ret := post.Find(post, "", []interface{}{})
+	c.JSON(200, (ret))
 }

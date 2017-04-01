@@ -13,7 +13,7 @@ type Modeli interface {
 
 	Update(Modeli, ...interface{}) (int, error)
 
-	Find(...interface{})
+	Find(Modeli, string, []interface{}) []interface{}
 
 	ID(...int) int
 	IDField(string) string
@@ -22,4 +22,5 @@ type Modeli interface {
 	GetObject() map[string]interface{}
 	GetObjectUpdate() map[string]interface{}
 	Exists(Modeli) map[string]interface{}
+	DataDecode(interface{}) error
 }
