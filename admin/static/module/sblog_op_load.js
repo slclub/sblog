@@ -7,22 +7,25 @@ layui.define(['laytpl'],function(exports){ //提示：模块也可以依赖其�
         entry : function(target,from){
           this.target = target;
           this.from = from;
+		  if (this.from && this.from.entry) {
+			  this.from.entry(this.target);
+		  }
           return this;
         },
         hello: function(str){
           alert('Hello '+ (str||'test'));
         },
         load:function(callback, load){
-            self = this;
+            var self = obj;
             $.ajax({
                 url:self.from.url,
                 async:true,
                 success:function(data,req_status){
                     self.content = data;
 
-                    laytpl(self.content).render({}, function(html){
-                      self.content = html;
-                    });
+//                    laytpl(self.content).render({}, function(html){
+//                      self.content = html;
+//                    });
                     self.target.innerHTML = self.content;
 
                     if(self.valideFunc(callback)){

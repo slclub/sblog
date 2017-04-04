@@ -36,7 +36,7 @@
     </div>
     <ul class="layui-nav" pc="">
       <li class="layui-nav-item ">
-        <a  id="sblog_op_add" class="sblog_op_cursor">新建</a>
+        <a  id="sblog_op_add" class="sblog_op_cursor sblog_op_add">新建</a>
       </li>
       <li class="layui-nav-item layui-this">
         <a href="#" class="sblog_op_cursor">示例</a>
@@ -189,7 +189,7 @@
 <!--" ###main brief-->
 <div class="layui-tab layui-tab-brief" lay-filter="demoTitle">
     <ul class="layui-tab-title site-demo-title">
-      <li class="layui-this">新建</li>
+      <li class="layui-this sblog_op_add">新建</li>
       <li>查看代码</li>
       <li>帮助</li>
     </ul>
@@ -256,12 +256,19 @@ layui.use(['layer', 'form','sblog_edit','sblog_op_load','sblog_post_list'],
 		})
 		//===========END 左侧菜单结束事件监听=======================
 
-		sblog_op_add.addEventListener('click', function(){
+		var sblog_op_add_func= function(){
+			var callLoad = layui.sblog_edit.load;
 			layui.sblog_op_load.entry(sblog_body,layui.sblog_edit);
-			layui.sblog_op_load.load();
+			layui.sblog_op_load.load(null,callLoad);
 			//sblog_body.innerHTML = layui.sblog_edit.content
-			layer.msg("OK");
+		}
+		sblog_op_add.addEventListener('click', function(){
+			sblog_op_add_func();
 		})
+
+		$(".sblog_op_add").on("click",function(self){
+			sblog_op_add_func();
+		});
 
 		
 });

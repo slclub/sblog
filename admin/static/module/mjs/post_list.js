@@ -1,21 +1,30 @@
-layui.define(['laytpl','form','laypage'],function(exports){ //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
+layui.define(['laytpl','form','laypage','sblog_edit','sblog_op_load'],function(exports){ //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
     var laytpl = layui.laytpl,laypage = layui.laypage;
     var obj = {
         url:"/static/module/html/post_list.js.html",
-        content : "",
+        gurl:"/sadmin/post/find",
+        content :"",
+        data_list:[],
         target:{},
         entry : function(target){
           this.target = target
         },
-        body:function(){
+        body:function(sdata){
           self = this
+		  var renderData = {
+			"post_list":sdata||[]
+		  }
 
-          laytpl(self.content).render({}, function(html){
-            self.content = html;
+		  var htmlEl = document.getElementById('sblog_post_list_content');
+		  self.content = sblog_post_list_content_tpl.innerHTML;
+		  //self.content = htmlEl.innerHTML
+          laytpl(self.content).render(renderData, function(ehtml){
+            htmlEl.innerHTML = ehtml;
           });
-          self.target.innerHTML = self.content;
+          //self.target.innerHTML = self.content;
 
-                return self.content;
+          layui.form().render(); //更新全部
+			return self.content;
         },
         page:function(){
             laypage({
@@ -26,8 +35,27 @@ layui.define(['laytpl','form','laypage'],function(exports){ //提示：模块也
                 }
             });
         },
+        flush:function(){
+            var self =obj
+            $.ajax({
+                url:self.gurl,
+                type:"POST",
+                success:function(data,request_status){
+				debugger;
+                    if (!(data.constructor == Array)) {
+                        return
+                    }
+                    self.data_list = data;//JSON.parse(data);
+					self.render(self.data_list);
+					self.listen();
+                }
+            })
+        },
+		render:function(obj){
+			this.body(obj)
+		},
         load:function(){
-          self = obj
+          var self = obj
 
           var $ = layui.jquery, form = layui.form();
 
@@ -41,8 +69,19 @@ layui.define(['laytpl','form','laypage'],function(exports){ //提示：模块也
             form.render('checkbox');
           });
           //pagenation
-          self.page()
-        }
+          self.page();
+		  self.flush();
+        },
+		listen:function(){
+		  //edit operation.
+		  $(".sblog_post_edit_icon").on("click", function(){
+		    var el = $(this);
+			var id = el.data("val")
+			layui.sblog_op_load.entry(sblog_body,layui.sblog_edit);
+			layui.sblog_op_load.load(null,layui.sblog_edit.load)
+			layui.sblog_edit.load({ID:id})
+		  });
+		}
     };
 
     //输出接口

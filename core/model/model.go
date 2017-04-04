@@ -153,7 +153,6 @@ func (self *Model) Find(data Modeli, where string, bindArr []interface{}) []inte
 	cols, err := rows.Columns()
 	getVals := make([]interface{}, len(cols))
 	getValsAddr := make([]interface{}, len(cols))
-	dest := make(map[string]interface{})
 
 	for i := 0; i < len(getVals); i++ {
 		addr := new(interface{})
@@ -162,6 +161,7 @@ func (self *Model) Find(data Modeli, where string, bindArr []interface{}) []inte
 	}
 	for rows.Next() {
 		err := rows.Scan(getValsAddr...)
+		dest := make(map[string]interface{})
 		for i := 0; i < lenAttr; i++ {
 			dest[attrs[i]] = getVals[i]
 		}
@@ -205,9 +205,12 @@ func (self *Model) Exists(data Modeli) map[string]interface{} {
 		panic("select error exists " + select_err.Error())
 	}
 	for i := 0; i < lenAttr; i++ {
-		res[attrs[i]] = values[i]
+		var vall *interface{}
+		vall = values[i].(*interface{})
+		res[attrs[i]] = *vall
 	}
 
+	data.DataDecode(res)
 	return res
 }
 

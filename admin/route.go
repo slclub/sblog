@@ -19,6 +19,7 @@ func init() {
 	r.GET("/sadmin/", diAdmin.Di(Index))
 	r.Any("/sadmin/post/save", diAdmin.Di(PostAdd))
 	r.Any("/sadmin/post/find", diAdmin.Di(PostFind))
+	r.Any("/sadmin/post/addhtml", diAdmin.Di(PostAddHtml))
 }
 
 var adminSet gin.HandlerFunc = func(c *gin.Context) {
