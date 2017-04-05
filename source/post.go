@@ -77,6 +77,11 @@ func (post *Post) Create(value model.Modeli) (int, error) {
 
 func (post *Post) Update(value model.Modeli, args ...interface{}) (ret int, err error) {
 	post.ObjectUpdate["modified_time"] = int(time.Now().Unix())
+
+	if val, _ := post.ObjectUpdate["sort"]; val == 0 || val == "" || val == nil {
+		delete(post.ObjectUpdate, "sort")
+	}
+
 	return post.Model.Update(value, args...)
 }
 
@@ -84,8 +89,9 @@ func (post *Post) IDField(fld string) string {
 	return post.Model.IDField("p_id")
 }
 
-func (post *Post) Order() {
-	post.OrderSql = " order by sort desc,id asc "
+func (post *Post) Order() model.Modeli {
+	post.OrderSql = " order by sort desc,p_id desc "
+	return post
 }
 
 func (post *Post) DataDecode(convertData interface{}) error {

@@ -9,7 +9,7 @@ type Modeli interface {
 
 	Create(Modeli) (int, error)
 
-	Delete(string, ...interface{})
+	Delete(Modeli, ...interface{}) (int, error)
 
 	Update(Modeli, ...interface{}) (int, error)
 
@@ -23,4 +23,6 @@ type Modeli interface {
 	GetObjectUpdate() map[string]interface{}
 	Exists(Modeli) map[string]interface{}
 	DataDecode(interface{}) error
+
+	Order() Modeli
 }

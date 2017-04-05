@@ -6,6 +6,7 @@ layui.define(['laytpl','form','laypage','sblog_edit','sblog_op_load'],function(e
         content :"",
         data_list:[],
         target:{},
+		findData:{},
         entry : function(target){
           this.target = target
         },
@@ -31,7 +32,12 @@ layui.define(['laytpl','form','laypage','sblog_edit','sblog_op_load'],function(e
                 cont: 'sblog_post_list_page'
                 ,pages: 100 //总页数
                 ,groups: 5 //连续显示分页数
-                ,jump:function(){
+                ,jump:function(object,first){
+					if (first){
+						return this
+					}
+					obj.findData.page=object.curr
+					obj.load({NotFulshPage:true});
                 }
             });
         },
@@ -39,9 +45,9 @@ layui.define(['laytpl','form','laypage','sblog_edit','sblog_op_load'],function(e
             var self =obj
             $.ajax({
                 url:self.gurl,
-                type:"POST",
+				data:self.findData,
+                type:"GET",
                 success:function(data,request_status){
-				debugger;
                     if (!(data.constructor == Array)) {
                         return
                     }
@@ -54,7 +60,8 @@ layui.define(['laytpl','form','laypage','sblog_edit','sblog_op_load'],function(e
 		render:function(obj){
 			this.body(obj)
 		},
-        load:function(){
+        load:function(param){
+			param = param || {}
           var self = obj
 
           var $ = layui.jquery, form = layui.form();
@@ -68,8 +75,10 @@ layui.define(['laytpl','form','laypage','sblog_edit','sblog_op_load'],function(e
                 });
             form.render('checkbox');
           });
-          //pagenation
-          self.page();
+		  if (!param.NotFulshPage) {
+			  //pagenation
+			  self.page();
+		  }
 		  self.flush();
         },
 		listen:function(){
@@ -80,6 +89,34 @@ layui.define(['laytpl','form','laypage','sblog_edit','sblog_op_load'],function(e
 			layui.sblog_op_load.entry(sblog_body,layui.sblog_edit);
 			layui.sblog_op_load.load(null,layui.sblog_edit.load)
 			layui.sblog_edit.load({ID:id})
+		  });
+		  $(".sblog_post_del_icon").on("click", function(){
+			var el = $(this)
+			layui.layer.confirm("Are you sure want to delete the data?",{
+				btn:['confirm','cancel'],
+				shade:true
+			},function(index){
+				$.ajax({
+					url:"/sadmin/post/delete",
+					data:{ID:el.data("val")},
+					success:function(res){
+						obj.load();
+					}
+				});
+				layui.layer.close(index);
+			});
+		  });
+		  $(".sblog_post_list_top").on("click", function(){
+			var el = $(this)
+			var ptr = el.parent().parent();
+			var id = ptr.data("id")
+			$.ajax({
+				url:"/sadmin/post/top",
+				data:{ID:id},
+				success:function(){
+					obj.load();
+				}
+			});
 		  });
 		}
     };

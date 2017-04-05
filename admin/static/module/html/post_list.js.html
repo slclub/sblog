@@ -1,6 +1,6 @@
 <style>
 	.layui-table .layui-form-checkbox[lay-skin=primary]{margin:0;}
-	.sblog_post_edit_icon{cursor:pointer;}
+	.sblog_post_edit_icon,.sblog_post_del_icon{cursor:pointer;}
 </style>
 
 <div class="layui-tab-item layui-show">
@@ -104,31 +104,20 @@
     </thead>
     <tbody >
 		{{#   layui.each(d.post_list,function(index,item){   }}
-      <tr>
+	  <tr data-id="{{ item.ID }}">
 		  <td><input type="checkbox" name="" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon"></i></div>
 			  <!--</td><td>-->
 			  <i class="layui-icon sblog_post_edit_icon" data-val="{{ item.ID }}">&#xe642;</i> 
-			<i class="layui-icon">&#xe640;</i> 
+			  <i class="layui-icon sblog_post_del_icon" data-val="{{ item.ID }}">&#xe640;</i> 
 		</td>
-		<td>{{ item.sort }}</td>
+		<td><button class="layui-btn layui-btn-mini sblog_post_list_top" value="{{ item.sort }}">TOP</button></td>
 		<td>{{ item.tags }}</td>
 		<td>{{ item.modified_time }}</td>
 		<td>{{ item.title }}</td>
       </tr>
 	  {{#   });   }}
-      <tr>
+  <!--
 		  <td><input type="checkbox" name="" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon"></i></div>
-			  <!--</td><td>-->
-			<i class="layui-icon">&#xe642;</i> 
-		</td>
-        <td>张爱玲</td>
-        <td>汉族</td>
-        <td>1920-09-30</td>
-        <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
-      </tr>
-      <tr>
-		  <td><input type="checkbox" name="" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon"></i></div>
-			  <!--</td><td>-->
 			<i class="layui-icon">&#xe642;</i> 
 		</td>
         <td>Helen Keller</td>
@@ -136,27 +125,7 @@
         <td>1880-06-27</td>
         <td> Life is either a daring adventure or nothing.</td>
       </tr>
-      <tr>
-		  <td><input type="checkbox" name="" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon"></i></div>
-			  <!--</td><td>-->
-			<i class="layui-icon">&#xe642;</i> 
-		</td>
-        <td>岳飞</td>
-        <td>汉族</td>
-        <td>1103-北宋崇宁二年</td>
-        <td>教科书再滥改，也抹不去“民族英雄”的事实</td>
-      </tr>
-      <tr>
-		  <td><input type="checkbox" name="" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon"></i></div>
-			  <!--</td><td>-->
-			<i class="layui-icon">&#xe642;</i> 
-			<i class="layui-icon">&#xe642;</i> 
-		</td>
-        <td>孟子</td>
-        <td>华夏族（汉族）</td>
-        <td>公元前-372年</td>
-        <td>猿强，则国强。国强，则猿更强！ </td>
-      </tr>
+	  -->
     </tbody>
   </table>
 </script>

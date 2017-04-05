@@ -70,7 +70,48 @@ func (self *Model) Create(data Modeli) (ret int, err error) {
 	return int(lastId), nil
 }
 
-func (self *Model) Delete(delStr string, args ...interface{}) {
+func (self *Model) Delete(data Modeli, args ...interface{}) (int, error) {
+	if len(args) == 0 {
+		//panic(errors.New("Incorrect args In model.Delete"))
+		return 0, errors.New("Incorrect args In model.Delete")
+	}
+
+	where := ""
+	var values = make([]interface{}, 0)
+	switch len(args) {
+	case 1:
+		arg1, _ := args[0].(int)
+		if id := (arg1); id > 0 {
+			where = data.IDField("") + "=? "
+			values = append(values, id)
+		} else {
+			return 0, errors.New("Incorrect id In Model.Delete")
+		}
+
+		break
+	case 2:
+		if vali, ok := args[1].([]interface{}); ok {
+			values = vali
+			where, _ = args[0].(string)
+		} else {
+			//panic(errors.New("Incorrect condition for delete operation"))
+			return 0, errors.New("Incorrect condition for delete operation")
+		}
+
+	}
+
+	sql := " DELETE FROM " + data.GetSource() + " WHERE " + where
+
+	DB, _ := db.Open()
+	defer DB.Close()
+
+	res, err := DB.Exec(sql, values...)
+	if err != nil {
+		return 0, err
+	}
+	rowCnt, err := res.RowsAffected()
+
+	return int(rowCnt), err
 }
 
 func (self *Model) Update(data Modeli, args ...interface{}) (ret int, err error) {
@@ -87,11 +128,17 @@ func (self *Model) Update(data Modeli, args ...interface{}) (ret int, err error)
 	}
 
 	if errExists := data.Exists(data); errExists == nil {
-		panic("the record updated was not existed")
+		//panic("the record updated was not existed")
+		return 0, errors.New("the record updated was not existed")
 	}
 
 	vali := 0
 	for index, val := range objectUpdate {
+
+		if index == "created_time" {
+			continue
+		}
+
 		if nil == val {
 			val = ""
 		}
@@ -105,16 +152,16 @@ func (self *Model) Update(data Modeli, args ...interface{}) (ret int, err error)
 	sql += " WHERE " + data.IDField("") + " =?"
 	update_stmt, update_err := DB.Prepare(sql)
 	if update_err != nil {
-		panic(update_err.Error() + "UPDATE error")
+		return 0, errors.New(update_err.Error() + "UPDATE error")
 	}
 	sqlRes, err := update_stmt.Exec(values...)
 	if err != nil {
-		panic(err.Error() + "UPDATE error")
+		return 0, errors.New(update_err.Error() + "UPDATE error")
 	}
-	effectRows, errr := sqlRes.RowsAffected()
+	effectRows, err := sqlRes.RowsAffected()
 
-	if errr != nil {
-		panic(errr.Error() + "UPDATE error")
+	if err != nil {
+		return 0, errors.New(update_err.Error() + "UPDATE error")
 	}
 
 	return int(effectRows), nil
@@ -139,6 +186,7 @@ func (self *Model) Find(data Modeli, where string, bindArr []interface{}) []inte
 	}
 	sel := strings.Join(attrs, ",")
 	limit := " limit " + strconv.Itoa(int(self.LimitSql["offset"])) + "," + strconv.Itoa(int(self.LimitSql["limit"]))
+	data.Order()
 	order := self.OrderSql
 
 	sql := "select " + sel + " from " + data.GetSource() + " WHERE " + where + " " + order + limit
@@ -256,6 +304,18 @@ func (self *Model) GetInterValue(val string, typev string, args ...string) inter
 
 	switch typev {
 	case "int":
+		vint, ok := self.Object[val].(int)
+		if ok {
+			self.Object[val] = vint
+			return vint
+		}
+
+		vint64, ok := self.Object[val].(int64)
+		if ok {
+			self.Object[val] = vint64
+			return vint64
+		}
+
 		vs, ok := self.Object[val].(string)
 		v, _ := strconv.Atoi(vs)
 		if !ok {
