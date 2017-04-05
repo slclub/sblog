@@ -178,3 +178,14 @@ layui.define(['layer', 'code', 'form', 'element', 'util'], function(exports){
 
   exports('global', {});
 });
+
+var sblog = {
+	ajax:function(param){
+		param.beforeSend = sblog.beforeSend
+		$.ajax(param)
+	},
+	beforeSend:function(request){
+		request.setRequestHeader("Token", $.cookie("Token"));
+	}
+};
+

@@ -15,7 +15,7 @@ layui.define(['laytpl','form', 'layedit'],function(exports){ //提示：模块�
         },
         render:function(id){
             self = this
-            $.ajax({
+            sblog.ajax({
                 url:"/sadmin/post/addhtml",
                 data:{ID:id},
                 async:true,
@@ -71,7 +71,7 @@ layui.define(['laytpl','form', 'layedit'],function(exports){ //提示：模块�
             self = obj;
             adata = adata || {};
             console.log(adata)
-            $.ajax({
+            sblog.ajax({
                 url:"/sadmin/post/save",
                 data:adata,
                 type:"POST",

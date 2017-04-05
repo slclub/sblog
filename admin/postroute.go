@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-var print = fmt.Println
+var Print = fmt.Println
 var PostAdd gin.HandlerFunc = func(c *gin.Context) {
 	m := make(map[string]interface{})
 	m["p_id"] = c.PostForm("ID")

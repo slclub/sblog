@@ -95,7 +95,7 @@ func (di *dispatcher) Bind(name string, fn gin.HandlerFunc, pos int8) *dispatche
 
 //Dispatcher factory.
 func (di *dispatcher) Deal(c *gin.Context, pos int8) {
-	for _, item := range di.loop_func[BEGIN] {
+	for _, item := range di.loop_func[pos] {
 		if item.status == false {
 			continue
 		}

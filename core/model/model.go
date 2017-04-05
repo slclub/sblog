@@ -16,7 +16,7 @@ const (
 	PAGE_SIZE = 10
 )
 
-var print = fmt.Println
+var Print = fmt.Println
 
 type Model struct {
 	Object map[string]interface{}
@@ -185,6 +185,10 @@ func (self *Model) Find(data Modeli, where string, bindArr []interface{}) []inte
 		where = where
 	}
 	sel := strings.Join(attrs, ",")
+
+	if (self.LimitSql["limit"]) == 0 {
+		self.LimitSql["limit"] = PAGE_SIZE
+	}
 	limit := " limit " + strconv.Itoa(int(self.LimitSql["offset"])) + "," + strconv.Itoa(int(self.LimitSql["limit"]))
 	data.Order()
 	order := self.OrderSql
@@ -225,9 +229,32 @@ func (self *Model) Find(data Modeli, where string, bindArr []interface{}) []inte
 	return ret
 }
 
-func (self *Model) FindOne(args ...interface{}) {
-	if len(args) <= 0 {
+func (self *Model) FindOne(data Modeli, args ...interface{}) (ret map[string]interface{}) {
+
+	where := ""
+	bindArr := []interface{}{}
+	switch len(args) {
+	case 0:
+		if data.ID() == 0 {
+			return
+		} else {
+			where = data.IDField("") + "=? "
+			bindArr = append(bindArr, data.ID())
+		}
+	case 1:
+		where = data.IDField("") + "=? "
+		bindArr[0] = append(bindArr, args[0].(int))
+	case 2:
+		where = args[0].(string)
+		bindArr = args[1].([]interface{})
 	}
+
+	self.Limit(0, 1)
+	s := self.Find(data, where, bindArr)
+	if len(s) > 0 {
+		ret = s[0].(map[string]interface{})
+	}
+	return
 }
 
 func (self *Model) Exists(data Modeli) map[string]interface{} {

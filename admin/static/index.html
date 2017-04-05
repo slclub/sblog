@@ -36,7 +36,11 @@
     </div>
     <ul class="layui-nav" pc="">
       <li class="layui-nav-item ">
-        <a  id="sblog_op_add" class="sblog_op_cursor sblog_op_add">新建</a>
+	    <a  id="sblog_op_add" class="sblog_op_cursor sblog_op_add">
+			<span class="layui-btn " style="background-color:#393d49;">
+			<i class="layui-icon">&#xe608;</i> 添加
+			</span>
+		</a>
       </li>
       <li class="layui-nav-item layui-this">
         <a href="#" class="sblog_op_cursor">示例</a>
@@ -189,9 +193,23 @@
 <!--" ###main brief-->
 <div class="layui-tab layui-tab-brief" lay-filter="demoTitle">
     <ul class="layui-tab-title site-demo-title">
-      <li class="layui-this sblog_op_add">新建</li>
-      <li>查看代码</li>
-      <li>帮助</li>
+		<li class="layui-this sblog_op_add">
+			<span class=" " style="background-color:none;">
+			<i class="layui-icon">&#xe608;</i> 添加
+			</span>
+		</li>
+		<li id="sblog_post_list_b1">
+			<span class=" " style="background-color:none;">
+			<i class="layui-icon">&#xe60a;</i> 
+			Post List
+			</span>
+		</li>
+		<li>
+			<span class=" " style="background-color:none;">
+			<i class="layui-icon">&#xe607;</i> 
+		帮助
+			</span>
+		</li>
     </ul>
     <div class="layui-body layui-tab-content site-demo site-demo-body" id="sblog_body">
     
@@ -220,6 +238,7 @@
 </div>
 
 <script src="/jquery.js"></script>
+<script src="/jquery.cookie.js"></script>
 <script src="/static/layui/src/layui.js"></script>
 
 <script>
@@ -249,12 +268,18 @@ layui.use(['layer', 'form','sblog_edit','sblog_op_load','sblog_post_list'],
 		,form = layui.form();
 		  
 		//============BEGIN slide bar 左侧菜单========================
-		slide_post_list.addEventListener('click', function(){
+		var sblog_list_func = function(){
 			var callLoad = layui.sblog_post_list.load;
 			layui.sblog_op_load.entry(sblog_body,layui.sblog_post_list);
 			layui.sblog_op_load.load(null,callLoad);
+		}
+		slide_post_list.addEventListener('click', function(){
+			sblog_list_func()
 		})
 		//===========END 左侧菜单结束事件监听=======================
+		sblog_post_list_b1.addEventListener('click', function(){
+			sblog_list_func()
+		})
 
 		var sblog_op_add_func= function(){
 			var callLoad = layui.sblog_edit.load;

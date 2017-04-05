@@ -24,7 +24,7 @@ CREATE TABLE `s_admin` (
     `password` VARCHAR(64) NOT NULL DEFAULT '',
     `name` VARCHAR(64) NULL DEFAULT '',
     `email` VARCHAR(64) NULL DEFAULT '',
-    `created_time` DATE NULL DEFAULT '0',
+    `created_time` int NULL DEFAULT '0',
     `timestampe` int  not null,
     PRIMARY KEY (`uid`)
 );

@@ -12,8 +12,11 @@ var diAdmin = dispatcher.Admin()
 
 func init() {
 	diAdmin.Bind("tmp_admin", adminSet, 1)
+	diAdmin.Bind("jwt_token", AuthFunc, 1)
+
 	r.Static("/static", ("./admin/static"))
 	r.StaticFile("/jquery.js", "./static/jquery-3.2.0.min.js")
+	r.StaticFile("/jquery.cookie.js", "./static/jquery-cookie/src/jquery.cookie.js")
 	r.Use(gin.Recovery())
 
 	r.GET("/sadmin/", diAdmin.Di(Index))
@@ -22,6 +25,7 @@ func init() {
 	r.Any("/sadmin/post/addhtml", diAdmin.Di(PostAddHtml))
 	r.Any("/sadmin/post/delete", diAdmin.Di(PostDelete))
 	r.Any("/sadmin/post/top", diAdmin.Di(PostTop))
+	r.Any("/sadmin/s-lg", diAdmin.Di(UserLogin))
 }
 
 var adminSet gin.HandlerFunc = func(c *gin.Context) {

@@ -43,7 +43,7 @@ layui.define(['laytpl','form','laypage','sblog_edit','sblog_op_load'],function(e
         },
         flush:function(){
             var self =obj
-            $.ajax({
+            sblog.ajax({
                 url:self.gurl,
 				data:self.findData,
                 type:"GET",
@@ -96,7 +96,7 @@ layui.define(['laytpl','form','laypage','sblog_edit','sblog_op_load'],function(e
 				btn:['confirm','cancel'],
 				shade:true
 			},function(index){
-				$.ajax({
+				sblog.ajax({
 					url:"/sadmin/post/delete",
 					data:{ID:el.data("val")},
 					success:function(res){
@@ -110,7 +110,7 @@ layui.define(['laytpl','form','laypage','sblog_edit','sblog_op_load'],function(e
 			var el = $(this)
 			var ptr = el.parent().parent();
 			var id = ptr.data("id")
-			$.ajax({
+			sblog.ajax({
 				url:"/sadmin/post/top",
 				data:{ID:id},
 				success:function(){
