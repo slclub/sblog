@@ -24,8 +24,8 @@ type box struct {
 //Injection function execution authority structure
 //Can be executed according to the specific route
 type PermissionBox struct {
-	Yes []string
-	No  []string
+	Yes map[string][]string
+	No  map[string][]string
 }
 
 var print = fmt.Println
@@ -47,7 +47,8 @@ func Admin() *dispatcher {
 }
 
 func New() *dispatcher {
-	return &dispatcher{map[int8]LoopFuncs{}, []string{}, &PermissionBox{}}
+	var permissionMap = make(map[string][]string)
+	return &dispatcher{map[int8]LoopFuncs{}, []string{}, &PermissionBox{permissionMap, permissionMap}}
 }
 
 //Can be rewritten from the outside world
@@ -104,7 +105,7 @@ func (di *dispatcher) Deal(c *gin.Context, pos int8) {
 		//	continue
 		//}
 
-		if inSlice(item.name, di.permission.No) {
+		if inSlice(item.name, di.permission.No[c.Request.URL.Path]) {
 			continue
 		}
 		item.fn(c)
@@ -113,17 +114,17 @@ func (di *dispatcher) Deal(c *gin.Context, pos int8) {
 
 //Set the permissions that can be executed by the injection function
 //Service for a single route path·
-func (di *dispatcher) Permission(yes []string, no []string) *dispatcher {
+func (di *dispatcher) Permission(path string, no []string) *dispatcher {
 	//di.permission.Yes = yes
-	di.permission.No = no
+	di.permission.No[path] = no
 	return di
 }
 
 //Relatively high operating authority.
 //Can Global permissions can be prevented from running
 //Service for a single route path·
-func (di *dispatcher) NotAllow(not []string) *dispatcher {
-	di.permission.No = not
+func (di *dispatcher) NotAllow(path string, not []string) *dispatcher {
+	di.permission.No[path] = not
 	return di
 }
 
@@ -134,6 +135,9 @@ func (di *dispatcher) GloblaAllowed(allowSlice []string) {
 
 //The item param exist in the slice.
 func inSlice(item string, s []string) bool {
+	if s == nil {
+		return false
+	}
 	for _, v := range s {
 		if v == item {
 			return true

@@ -8,6 +8,11 @@ import (
 	"sblog/source"
 )
 
+func init() {
+	diAdmin.NotAllow("/sadmin/s-lg", []string{"jwt_token"})
+	r.GET("/sadmin/s-lg", diAdmin.Di(UserLogin))
+}
+
 var UserLogin gin.HandlerFunc = func(c *gin.Context) {
 	username := c.Query("lg-name")
 	password := c.Query("lg-pwd")

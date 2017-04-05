@@ -9,6 +9,15 @@ import (
 	"time"
 )
 
+func init() {
+	diAdmin.NotAllow("/sadmin/post/addhtml", []string{"jwt_token"})
+	r.Any("/sadmin/post/save", diAdmin.Di(PostAdd))
+	r.Any("/sadmin/post/find", diAdmin.Di(PostFind))
+	r.GET("/sadmin/post/addhtml", diAdmin.Di(PostAddHtml))
+	r.GET("/sadmin/post/delete", diAdmin.Di(PostDelete))
+	r.GET("/sadmin/post/top", diAdmin.Di(PostTop))
+}
+
 var Print = fmt.Println
 var PostAdd gin.HandlerFunc = func(c *gin.Context) {
 	m := make(map[string]interface{})
