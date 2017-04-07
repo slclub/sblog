@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+cd $GOPATH/src/sblog
+go build
+nohup ./sblog > myout.file 2>&1 &
+
+echo 'server start success!'
