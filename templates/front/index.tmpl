@@ -1,8 +1,81 @@
-<HTML>
-<head>
-<title>{{.title}}</title>
-</head>
-<BODY>
-<div>{{.content}}</div>
-</BODY>
-</HTML>
+{{template "header".}}
+<!-- ##BEGIN content -->
+
+<div class="sblog-middle .uk-width-*">
+
+		<div class="uk-grid uk-grid-collapse">
+			<!-- ##BEGIN left body-->
+      <div class="uk-width-7-10">
+        <div class="uk-width-9-10 uk-container-center">
+
+{{ range $i,$v := .postList}}
+					<div class="uk-block  sblog-uk-block uk-block-default ">
+				<article class="uk-article uk-article-list">
+<p class="uk-article-lead"><a href=""> {{$v.title}}...</a></p>
+<p class="uk-article-meta">由 {{$v.author}} 撰写于 2012年12月12日 | 发表在 博客</p>
+					<hr class="uk-article-divider">
+					{{ $v.content}}
+					...<em><a href="">more</a></em>
+				</article>	
+					</div>
+
+					<p class=" sblog_block-deliver"></p>
+{{end}}
+					<div class="uk-block  uk-block-default  sblog-uk-block">
+				<article class="uk-article uk-article-list">
+					<p class="uk-article-lead"><a href="">黄初三年，余朝京师，还济洛川。古人有言，斯水之神，名曰宓妃...</a></p>
+					<p class="uk-article-meta">由 曹植 撰写于 2012年12月12日 | 发表在 博客</p>
+					<hr class="uk-article-divider">
+					{{ .intro}}
+					...
+				</article>	
+					</div>
+
+					<p class=" sblog_block-deliver"></p>
+
+					<ul class="uk-pagination">
+            <li class="uk-pagination-previous uk-width-2-10"><a href="/?page={{  .prepage}}"><i class="uk-icon-angle-double-left"></i> Prev</a></li>
+						<li class="uk-pagination-next uk-width-2-10"><a href="/?page={{ .nextpage}}">Next <i class="uk-icon-angle-double-right"></i></a></li>
+					</ul>
+					<p class=" sblog_block-deliver"></p>
+        </div>
+      </div>
+
+			<!-- ##END left body-->
+
+			<!-- ##BEGIN righ body-->
+			<div class="uk-width-3-10 uk-container-center">
+
+					<div class="uk-block uk-block-defined-bar uk-width-9-10">
+              <div class="uk-panel uk-panel-box">
+                <ul class="uk-list uk-list-line ">
+                  <li><a href="">List item 1</a></li>
+                  <li><a href="">List item 1</a></li>
+                  <li><a href="">List item 1</a></li>
+                </ul>					
+              </div>
+              <figcaption class="uk-overlay-panel uk-overlay-background uk-overlay-top">
+                            <h3>Overlay Top</h3>
+              </figcaption>
+              <p class=" sblog_block-deliver"></p>
+
+          </div>
+      </div>
+			<!-- ##END righ body-->
+		</div>
+
+        <!-- 这是用来触发抽屉式边栏的按钮 -->
+        <button class="uk-button sblog-drawer-btn" data-uk-offcanvas="{target:'#my-id'}"><i class="uk-icon-list"></i></button>
+
+        <!-- 这是抽屉式边栏 -->
+        <div id="my-id" class="uk-offcanvas">
+          <div class="uk-offcanvas-bar">
+            <div class="uk-panel">...</div>
+          </div>
+        </div>
+
+    </div>
+</div>
+<!-- ##END content -->
+<!-- ## footer-->
+{{template "footer" .}}

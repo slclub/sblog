@@ -13,6 +13,7 @@ type Modeli interface {
 
 	Update(Modeli, ...interface{}) (int, error)
 
+	Fields(...string) (ret []string)
 	Find(Modeli, string, []interface{}) []interface{}
 
 	ID(...int) int

@@ -4,7 +4,7 @@ layui.define(['laytpl','form', 'layedit'],function(exports){ //提示：模块�
     var form = layui.form()
 	//创建一个编辑器
     var obj = {
-        url:"/static/module/html/edit.js.html",
+        url:"/back/module/html/edit.js.html",
         content : "",
         target:{},
         entry : function(target){

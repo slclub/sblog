@@ -14,7 +14,7 @@ func init() {
 	diAdmin.Bind("tmp_admin", adminSet, 1)
 	diAdmin.Bind("jwt_token", AuthFunc, 1)
 
-	r.Static("/static", ("./admin/static"))
+	r.Static("/back", ("./admin/static"))
 	r.StaticFile("/jquery.js", "./static/jquery-3.2.0.min.js")
 	r.StaticFile("/jquery.cookie.js", "./static/jquery-cookie/src/jquery.cookie.js")
 	r.Use(gin.Recovery())

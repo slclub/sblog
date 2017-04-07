@@ -78,6 +78,8 @@ func (di *dispatcher) Handle(fn gin.HandlerFunc) gin.HandlerFunc {
 		fn(c)
 		di.Deal(c, END)
 	}
+
+	Recovery()
 	return HandleFunc
 }
 
@@ -131,6 +133,13 @@ func (di *dispatcher) NotAllow(path string, not []string) *dispatcher {
 //Service for all routes
 func (di *dispatcher) GloblaAllowed(allowSlice []string) {
 	di.GlobalNames = append(di.GlobalNames, allowSlice...)
+}
+
+func Recovery() {
+	defer func() {
+		fmt.Println("Dispatcher error:")
+	}()
+	gin.Recovery()
 }
 
 //The item param exist in the slice.

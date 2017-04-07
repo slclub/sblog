@@ -25,10 +25,7 @@ type Post struct {
 }
 
 func NewPost() *Post {
-	var Object = make(map[string]interface{})
-	var ObjectUpdate = make(map[string]interface{})
-	var limit = make(map[string]uint)
-	return &Post{&model.Model{Object, 0, ObjectUpdate, limit, ""}, 0, 0, 0, "", "", 0, "", 0, 0}
+	return &Post{model.NewModel(), 0, 0, 0, "", "", 0, "", 0, 0}
 }
 
 func (post *Post) GetAttr() (result []string) {

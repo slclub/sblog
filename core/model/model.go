@@ -25,6 +25,16 @@ type Model struct {
 	ObjectUpdate map[string]interface{}
 	LimitSql     map[string]uint
 	OrderSql     string
+	SelectAttr   []string
+}
+
+func NewModel() *Model {
+
+	var Object = make(map[string]interface{})
+	var ObjectUpdate = make(map[string]interface{})
+	var limit = make(map[string]uint)
+
+	return &Model{Object, 0, ObjectUpdate, limit, "", []string{}}
 }
 
 func (self *Model) GetSource(args ...string) string {
@@ -167,11 +177,24 @@ func (self *Model) Update(data Modeli, args ...interface{}) (ret int, err error)
 	return int(effectRows), nil
 }
 
+func (self *Model) Fields(args ...string) (ret []string) {
+	if len(args) > 0 {
+		self.SelectAttr = args
+	}
+	ret = self.SelectAttr
+	return
+}
+
 func (self *Model) Find(data Modeli, where string, bindArr []interface{}) []interface{} {
 	DB, _ := db.Open()
 	defer DB.Close()
+
 	id := data.ID()
-	attrs := data.GetAttr()
+
+	attrs := data.Fields()
+	if len(attrs) == 0 {
+		attrs = data.GetAttr()
+	}
 	lenAttr := len(attrs)
 
 	where = self.Where(where)
@@ -410,7 +433,7 @@ func (self *Model) Page(page uint, args ...uint) {
 		limit = args[0]
 	}
 
-	if page == 0 {
+	if page <= 0 {
 		page = 1
 	}
 

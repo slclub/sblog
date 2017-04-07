@@ -1,0 +1,57 @@
+{{define "header"}}
+<!DOCTYPE html>
+<html>
+<head>
+<title>{{.web_title}}</title>
+        <link rel="stylesheet" href="//cdn.bootcss.com/uikit/2.25.0/css/uikit.min.css" />
+        <link rel="stylesheet" href="//cdn.bootcss.com/uikit/2.25.0/css/components/search.css" />
+        <link rel="stylesheet" href="/front/css/style.css" />
+</head>
+<body>
+<!-- ## header -->
+<nav class="uk-navbar uk-navbar-bg  .uk-width-*">
+    <a class="uk-navbar-brand" href="#">Aixgl  艾辛阁</a>
+
+    <ul class="uk-navbar-nav">
+        <li class="uk-parent uk-active" data-uk-dropdown="" aria-haspopup="true" aria-expanded="false">
+            <a href="/" class="uk-home"><i class="uk-icon-home"></i> Home</a>
+
+            <div class="uk-dropdown uk-dropdown-navbar uk-dropdown-bottom" style="top: 40px; left: 0px;">
+                <ul class="uk-nav uk-nav-navbar">
+                    <li class=""><a href="#">Item</a></li>
+                    <li><a href="#">Another item</a></li>
+                    <li class="uk-nav-header">Header</li>
+                    <li><a href="#">Item</a></li>
+                    <li><a href="#">Another item</a></li>
+                    <li class="uk-nav-divider"></li>
+                    <li><a href="#">Separated item</a></li>
+                </ul>
+            </div>
+
+        </li>
+
+    </ul>
+
+    <div class="uk-navbar-content"> ~~
+		<a href="#" class="navbar-content-link">{{.title}}</a>
+		~~
+	</div>
+
+    <div class="uk-navbar-content uk-navbar-flip  uk-hidden-small">
+        <div class="uk-button-group">
+            <a class="uk-button uk-button-danger" href="#">follow</a>
+            <button class="uk-button uk-button-danger">Star</button>
+        </div>
+    </div>
+
+    <div class="uk-navbar-content uk-navbar-flip uk-hidden-small">
+		<form class="uk-search" data-uk-search="{flipDropdown:true, source:'../tests/components/_searchautocomplete.json'}">
+			<input class="uk-search-field" type="search" placeholder="search..." autocomplete="off">
+			<div class="uk-dropdown uk-dropdown-flip uk-dropdown-search" aria-expanded="false"></div>
+		</form>
+    </div>
+
+</nav>
+<!-- ##END header -->
+<div class="uk-width-*" style="height:40px;"></div>
+{{end}}

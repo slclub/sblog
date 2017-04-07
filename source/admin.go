@@ -15,10 +15,7 @@ type Admin struct {
 }
 
 func NewAdmin() *Admin {
-	var Object = make(map[string]interface{})
-	var ObjectUpdate = make(map[string]interface{})
-	var limit = make(map[string]uint)
-	return &Admin{&model.Model{Object, 0, ObjectUpdate, limit, ""}, 0, "", "", "", "", 0}
+	return &Admin{model.NewModel(), 0, "", "", "", "", 0}
 }
 func (admin *Admin) GetAttr() (result []string) {
 

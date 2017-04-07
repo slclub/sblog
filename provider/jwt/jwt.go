@@ -2,11 +2,14 @@ package jwt
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	jwt "github.com/dgrijalva/jwt-go"
 	"sblog/config"
-	"strconv"
 	"time"
 )
+
+var Print = fmt.Println
 
 func Encode(des interface{}) (ret string, err error) {
 	var iss string
@@ -43,29 +46,47 @@ func Encode(des interface{}) (ret string, err error) {
 	return
 }
 
-func Decode(token string) (ret map[string]string, err error) {
-	ret = make(map[string]string)
+func Decode(token string) (ret map[string]interface{}, err error) {
+	ret = make(map[string]interface{})
 	mySigningKey := config.JWT_KEY
 	retToken, err := jwt.Parse(token, func(*jwt.Token) (interface{}, error) {
 		return Get(mySigningKey), nil
 	})
+	if retToken == nil {
+		ret["exp"] = int64(0)
+		ret["valid"] = errors.New("Not a valided token")
+		return
+	}
 	for index, val := range retToken.Claims.(jwt.MapClaims) {
 		vall, ok := val.(string)
 		if ok {
-			ret[index] = vall
+			if index == "iss" {
+				var valls = make(map[string]interface{})
+				json.Unmarshal([]byte(vall), &valls)
+				ret[index] = valls
+			} else {
+				ret[index] = vall
+			}
 		}
 
 		valint64, ok := val.(int64)
 		if ok {
-			ret[index] = strconv.Itoa(int(valint64))
+			ret[index] = (valint64)
 		}
 
 		valint, ok := val.(int)
 		if ok {
-			ret[index] = strconv.Itoa((valint))
+			ret[index] = (int64(valint))
 		}
-
+		valfloat64, ok := val.(float64)
+		if ok {
+			ret[index] = (int64(valfloat64))
+		}
 	}
+
+	valid := retToken.Claims.Valid()
+	ret["valid"] = valid
+
 	return
 }
 

@@ -10,7 +10,9 @@ import (
 
 func init() {
 	diAdmin.NotAllow("/sadmin/s-lg", []string{"jwt_token"})
+	//diAdmin.NotAllow("/sadmin/notvalidtoken", []string{"jwt_token"})
 	r.GET("/sadmin/s-lg", diAdmin.Di(UserLogin))
+	r.GET("/sadmin/notvalidtoken", NotValidToken)
 }
 
 var UserLogin gin.HandlerFunc = func(c *gin.Context) {

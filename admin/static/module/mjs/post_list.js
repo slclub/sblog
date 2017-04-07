@@ -1,7 +1,7 @@
 layui.define(['laytpl','form','laypage','sblog_edit','sblog_op_load'],function(exports){ //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
     var laytpl = layui.laytpl,laypage = layui.laypage;
     var obj = {
-        url:"/static/module/html/post_list.js.html",
+        url:"/back/module/html/post_list.js.html",
         gurl:"/sadmin/post/find",
         content :"",
         data_list:[],
