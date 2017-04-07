@@ -266,7 +266,7 @@ func (self *Model) FindOne(data Modeli, args ...interface{}) (ret map[string]int
 		}
 	case 1:
 		where = data.IDField("") + "=? "
-		bindArr[0] = append(bindArr, args[0].(int))
+		bindArr = append(bindArr, args[0].(int))
 	case 2:
 		where = args[0].(string)
 		bindArr = args[1].([]interface{})
