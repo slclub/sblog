@@ -1,30 +1,42 @@
 body{background:#e8eacc;padding: 0;
     min-height: 100vh;
     background-size: cover;}
-.uk-navbar-bg{background-color:#333; color:#eee;position:fixed;top:0;left:0;z-index:1000;}
+.uk-navbar-bg{background-color:#587; color:#eee;position:fixed;top:0;left:0;z-index:1000;}
 .uk-navbar .uk-navbar-brand{color:#fff;}
 .uk-navbar .uk-button-primary{background-color:#da314b;}
 .navbar-content-link {color:#e69500;}
 .uk-navbar-content a:hover {color:#fff;}
 .uk-navbar-nav>li a:hover {background-color: #da314b;color:#fff;}
 .uk-navbar-nav>li.uk-active>a  , .uk-active a:hover {background-color: #d7d9bb;}
-.uk-navbar-nav .uk-active .uk-home {color:#da314b;font-weight:bold;}
 .uk-navbar-nav .uk-dropdown{background-color:rgba(215, 217, 187, 0.85);}
 
 .uk-navbar-content .uk-search .uk-search-field{background-color:#d7d9bb;}
 
 /*content*/
+.sblog-left-body{
+box-shadow:
+    0px 0px #587,
+    1px 1px #698,
+    2px 2px #7a9,
+    3px 3px #8ba,
+    4px 4px #9cb,
+    5px 5px #adc,
+    5px 5px 0px rgba(5, 8, 7, 0.5),   
+    5px 5px 1px rgba(5, 8, 7, 0.5);  
+
+}
+
 .sblog-middle{padding-top:40px;}
 .sblog-drawer-btn{position:fixed;top:40px;}
 .uk-article-list{}
- .uk-article-list .uk-article-lead a{color:#333;}
- .uk-article-list .uk-article-lead a:hover {color:#f00;font-size:20px;text-decoration:none;}
-.sblog-uk-block{padding-left:5px;padding-top:15px;padding-bottom:10px;background:rgba(242, 244, 214, 1);border-radius:5px;box-shadow: -10px 0px 5px #888888;}
-.sblog-uk-block:hover {box-shadow: 0px -0px 5px #888888;}
+ .uk-article-list .uk-article-lead a{color:#587;text-shadow:1px 1px #eee,-1px -1px #444; font-family:"微软雅黑"}
+ .uk-article-list .uk-article-lead a:hover {color:#ddd;font-size:20px;text-decoration:none;}
+.sblog-uk-block{padding-left:5px;padding-top:15px;padding-bottom:10px;background:rgba(242, 244, 214, 1);box-shadow: 0px -0px 5px #888888;}
+.sblog-uk-block:hover {}
 
 .sblog-block-delver {height:10px;width:100%;}
 
-.uk-block-defined-bar{background:rgba(68, 68, 68, 0.65); padding-top:45px;padding-bottom:20px}
+.uk-block-defined-bar{background:rgba(68, 68, 68, 0.65); padding-top:25px;padding-bottom:20px;margin:auto;}
 .uk-block-defined-bar ul {padding-top :20px;}
 .uk-block-defined-bar .uk-list-line a{color:#eee;}
 
@@ -43,3 +55,101 @@ em a:hover {color:red; font-size:25px;}
 .sblog-footer a {color:#eee}
 
 .sblog-float-right{float:right;}
+
+/*specail font css*/
+.sblog-logo{padding-top:60px;height:auto; margin:auto;
+overflow:hidden; line-height:100px;font-size:100px;text-align:center;}   
+.sblog-logo .logo1{text-align:right;float:left;font-weight:bold;}
+.sblog-logo .logo2{text-align:center; font-size:40px;float:right;color:#b8ba9c;
+    text-shadow:  
+        1px 1px #eee,
+        -1px -1px #444;//使用阴影叠加出凹体文字特效
+}
+.sblog-logo {
+    color:#FFD300;  
+    text-shadow:  
+        0px 0px 0 #b89800,   
+        1px -1px 0 #b39400,   
+        2px -2px 0 #ad8f00,   
+        3px -3px 0 #a88b00,   
+        4px -4px 0 #a38700,   
+        5px -5px 0 #9e8300,   
+        6px -6px 0 #997f00,   
+        7px -7px 0 #947a00,   
+        8px -8px 0 #8f7600,   
+        9px -9px 0 #8a7200,   
+        10px -10px 0 #856e00,   
+        11px -11px 0 #806a00,   
+        12px -12px 0 #7a6500,   
+        13px -13px 12px rgba(0, 0, 0, 0.55),   
+        13px -13px 1px rgba(0, 0, 0, 0.5);  
+}
+.uk-navbar-nav .uk-active .uk-home {color:#fff;font-weight:bold; font-size:25px;
+    text-shadow:  
+        0px 0px 0 #b89800,   
+        -1px -1px 0 #b39400,   
+        -2px -2px 0 #ad8f00,   
+        -3px -3px 0 #a88b00,   
+        -4px -4px 0 #a38700,   
+        -4px -4px 4px rgba(0, 0, 0, 0.55),   
+        -4px -4px 1px rgba(0, 0, 0, 0.5);  
+
+    box-shadow:
+        0px 0px 0 #b0eadc,   
+        -1px 0px 0 #a5d8c7,   
+        -2px 0px 0 #90c3b2,   
+        -3px 0px 0 #85b8a7,   
+        -4px 0px 0 #70a392,   
+        -5px 0px 0 #609a8c,   
+        0px 0px 0 #b0eadc,   
+        1px 1px 0 #a5d8c7,   
+        2px 2px 0 #90c3b2,   
+        3px 0px 0 #85b8a7,   
+        4px 0px 0 #70a392,   
+        5px 0px 0 #609a8c,   
+        -5px 0px 1px rgba(4, 7, 6, 0.5),   
+        -5px 0px 1px rgba(4, 7, 6, 0.5),
+        5px 0px 1px rgba(4, 7, 6, 0.5),   
+        5px 0px 1px rgba(4, 7, 6, 0.5);  
+
+}
+/*specail block 
+border-radius:5px;
+*/
+.sblog-uk-block{
+    box-shadow:
+        0px 0px 0 #b89800,   
+        -1px -1px 0 #b39400,   
+        -2px -2px 0 #ad8f00,   
+        -3px -3px 0 #a88b00,   
+        -4px -4px 0 #a38700,   
+        -5px -5px 0 #9e8300,   
+        -6px -6px 0 #997f00,   
+        -7px -7px 0 #947a00,   
+        -8px -8px 0 #8f7600,   
+        -8px -8px 8px rgba(0, 0, 0, 0.55),   
+        -8px -8px 1px rgba(0, 0, 0, 0.5);  
+}
+/**/
+.uk-navbar-bg{
+    box-shadow:
+        0px 0px 0 #85b8a7,   
+        0px 1px 0 #90c3b2,   
+        0px 2px 0 #95c8b7,   
+        0px 3px 0 #a0d3c2,   
+        0px 4px 0 #a5d8c7,   
+        0px 5px 0 #b0eadc,   
+        0px 5px 5px rgba(0, 0, 0, 0.55),   
+        0px 5px 1px rgba(0, 0, 0, 0.5);  
+}
+.sblog-footer{
+    box-shadow:
+        0px -1px 0 #959585,   
+        0px -2px 0 #858585,   
+        0px -3px 0 #757575,   
+        0px -4px 0 #656565,   
+        0px -5px 0 #555555,   
+        0px -5px 5px rgba(0, 0, 0, 0.55),   
+        0px -5px 1px rgba(0, 0, 0, 0.5);  
+
+}

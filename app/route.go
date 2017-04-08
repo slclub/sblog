@@ -18,7 +18,7 @@ var Print = fmt.Println
 //set app func
 //===============================================================
 var appSet gin.HandlerFunc = func(c *gin.Context) {
-	r.LoadHTMLGlob("templates/mood/*.html")
+	r.LoadHTMLGlob("templates/front/*.tmpl")
 }
 
 func init() {

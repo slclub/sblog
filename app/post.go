@@ -21,7 +21,7 @@ var PostDetail gin.HandlerFunc = func(c *gin.Context) {
 	ct := ret["content"].(string)
 	ct = sbtext.DeScript(ct + "<script>alert('nothing')</script>")
 	ret["content"] = template.HTML(ct)
-	c.HTML(http.StatusOK, "blog.html", gin.H{
+	c.HTML(http.StatusOK, "detail.tmpl", gin.H{
 		"setting": Setting(""),
 		"detail":  ret,
 	})

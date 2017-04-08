@@ -5,7 +5,7 @@
 
 		<div class="uk-grid uk-grid-collapse">
 			<!-- ##BEGIN left body-->
-      <div class="uk-width-7-10">
+      <div class="uk-width-7-10 sblog-left-body">
         <div class="uk-width-9-10 uk-container-center">
 
 {{ range $i,$v := .postList}}
@@ -38,6 +38,7 @@
 						<li class="uk-pagination-next uk-width-2-10"><a href="/?page={{ .nextpage}}">Next <i class="uk-icon-angle-double-right"></i></a></li>
 					</ul>
 					<p class=" sblog_block-deliver"></p>
+					<p class=" sblog_block-deliver"></p>
         </div>
       </div>
 
@@ -54,9 +55,6 @@
                   <li><a href="">List item 1</a></li>
                 </ul>					
               </div>
-              <figcaption class="uk-overlay-panel uk-overlay-background uk-overlay-top">
-                            <h3>Overlay Top</h3>
-              </figcaption>
               <p class=" sblog_block-deliver"></p>
 
           </div>
@@ -64,15 +62,6 @@
 			<!-- ##END righ body-->
 		</div>
 
-        <!-- 这是用来触发抽屉式边栏的按钮 -->
-        <button class="uk-button sblog-drawer-btn" data-uk-offcanvas="{target:'#my-id'}"><i class="uk-icon-list"></i></button>
-
-        <!-- 这是抽屉式边栏 -->
-        <div id="my-id" class="uk-offcanvas">
-          <div class="uk-offcanvas-bar">
-            <div class="uk-panel">...</div>
-          </div>
-        </div>
 
     </div>
 </div>
