@@ -1,0 +1,74 @@
+<!doctype html>
+
+<html lang="en-US">
+<head>
+<meta charset="UTF-8" />
+<title>{{.setting.web_title}}</title>
+
+<link href="{{.setting.asset_path}}style.css" rel="stylesheet" type="text/css">
+<link href="{{.setting.asset_path}}styles/print/main.css" rel="stylesheet" type="text/css" media="print">
+<!--[if IE]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<!--[if IE 6]>
+<script src="js/belatedPNG.js"></script>
+<script>
+	DD_belatedPNG.fix('*');
+</script>
+<![endif]-->
+
+</head>
+
+<body>
+<div id="wrap">
+
+	<!-- ##BEGIN navigation-->
+<section id="top">
+	{{template "nav" .}}
+</section>
+	<!-- ##END navigation-->
+<section id="page">
+
+{{template "my_intro" .}}
+
+<section id="contents">
+{{ range $posti,$postv:= .postList}}
+<article class="post">
+	<header class="postheader">
+	<h2><a href="/v?ID={{$postv.ID}}">{{$postv.title}}</a></h2>
+	<p class="postinfo">Published on <time>{{$postv.created_time}}</time> under <a href="#">{{$postv.source}}</a></p>
+	</header>
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus varius nulla vel metus facilisis congue. Phasellus sed velit ipsum. Morbi suscipit ipsum vel tellus pulvinar aliquam. Aliquam non dui vel magna mollis molestie a nec quam.<a href="/v?ID={{$postv.ID}}"> Read More</a></p>
+	<footer class="postfooter">
+		<ul>
+			<li class="plink"><a href="#">{{$postv.author}}</a></li>
+			<li class="cment"><a href="#">{{$postv.commits}} Comments</a></li>
+		</ul>
+	</footer>
+</article>
+{{end}}
+
+
+	<div class="blog-nav">
+
+		<a href="/?page={{.prepage}}" class="pre-link">Previous</a>
+		<a href="/?page={{.nextpage}}" class="next-link">Next</a>
+	</div>
+</section>
+
+<section id="sidebar">
+{{template "sidebar" .}}
+</section>
+<div class="clear"></div>
+
+<div class="clear"></div>
+</section>
+</div>
+
+<footer id="pagefooter">
+{{template "footer" .}}
+</footer>
+
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</body>
+</html>

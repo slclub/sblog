@@ -18,14 +18,16 @@ var Print = fmt.Println
 //set app func
 //===============================================================
 var appSet gin.HandlerFunc = func(c *gin.Context) {
-	r.LoadHTMLGlob("templates/front/*.tmpl")
+	r.LoadHTMLGlob("templates/mood/*.html")
 }
 
 func init() {
 	diFront.Bind("tpl_front", appSet, 1)
 	r.GET("/", diFront.Di(Index))
 	r.Static("/front", ("./static"))
+	r.Static("/tmp", ("./templates/mood"))
 	r.GET("/v", diFront.Di(PostDetail))
+	r.GET("/forms", diFront.Di(CommentAdd))
 	//在后台路由设置中已经引入js路径了
 	//r.StaticFile("/jquery.js", "./static/jquery-3.2.0.min.js")
 	//r.StaticFile("/jquery.cookie.js", "./static/jquery-cookie/src/jquery.cookie.js")

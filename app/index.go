@@ -37,12 +37,13 @@ var Index gin.HandlerFunc = func(c *gin.Context) {
 
 	//Print(ret)
 
-	c.HTML(http.StatusOK, "index.tmpl", gin.H{
-		"web_title": "Aixgl.艾辛阁",
-		"content":   "Hello world",
-		"postList":  ret,
-		"prepage":   page - 1,
-		"nextpage":  page + 1,
+	Print(Setting("all"))
+	c.HTML(http.StatusOK, "index.html", gin.H{
+		"content":  "Hello world",
+		"postList": ret,
+		"prepage":  page - 1,
+		"nextpage": page + 1,
+		"setting":  Setting("all"),
 	})
 }
 
