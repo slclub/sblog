@@ -18,6 +18,7 @@
     </body>
 <script>
 $(function(){
+
     $('.uk-search-field').on('keydown',function(event){  
       //判断当event.keyCode 为37时（即左方面键），执行函数to_left();  
       //判断当event.keyCode 为39时（即右方面键），执行函数to_right();  
@@ -26,6 +27,7 @@ $(function(){
         sblog.search();
       }  
     }); 
+
 
     var sblog = function(){
         
@@ -39,6 +41,46 @@ $(function(){
         var url = "?search="+elv;
         $(window).attr('location', url);
     }
+    
+    sblog.square = function() {
+        var square_local = $(".square_local");
+        var sqlw = square_local.width();
+        var halfSqlw = sqlw/2
+        square_local.css("height",square_local.width());
+
+        $('.rect').css({
+            "width":sqlw,
+            "height":halfSqlw
+        });
+
+        $('.inner_circle').css({
+            "width":halfSqlw,
+            "height":halfSqlw,
+            "border-radius":halfSqlw
+        });
+        $('.dot').css({
+            "width":(sqlw / 8),
+            "height":sqlw/8,
+            "border-radius":"50%"
+        });
+        $('.rect_one').css({
+            "border-top-left-radius":halfSqlw,
+            "border-top-right-radius":halfSqlw
+        });
+        $('.rect_two').css({
+            "border-bottom-left-radius":halfSqlw,
+            "border-bottom-right-radius":halfSqlw
+        });
+        $('.rect_one_one').css({
+            "bottom":sqlw/4*-1
+        });
+        $('.rect_two_one').css({
+            "bottom":sqlw/4
+        });
+        
+    }
+
+    sblog.square();
     
 })
 

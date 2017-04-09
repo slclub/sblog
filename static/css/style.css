@@ -34,14 +34,16 @@ box-shadow:
 .uk-article-list{}
  .uk-article-list .uk-article-lead a{color:#587;text-shadow:1px 1px #eee,-1px -1px #444; font-family:"微软雅黑"}
  .uk-article-list .uk-article-lead a:hover {color:#ddd;font-size:20px;text-decoration:none;}
-.sblog-uk-block{padding-left:5px;padding-top:15px;padding-bottom:10px;background:rgba(242, 244, 214, 1);box-shadow: 0px -0px 5px #888888;}
+.sblog-uk-block{padding-left:5px;padding-top:15px;padding-bottom:10px;background:rgba(242, 244, 214, 1);}
 .sblog-uk-block:hover {}
 
 .sblog-block-delver {height:10px;width:100%;}
 
-.uk-block-defined-bar{background:rgba(68, 68, 68, 0.65); padding-top:25px;padding-bottom:20px;margin:auto;}
+.uk-block-defined-bar{background:rgba(242, 244, 214, 1); padding-top:25px;padding-bottom:20px;margin:auto;
+    box-shadow:1px 1px #eee,-1px -1px #aaa;
+}
 .uk-block-defined-bar ul {padding-top :20px;}
-.uk-block-defined-bar .uk-list-line a{color:#eee;}
+.uk-block-defined-bar .uk-list-line a{color:#333;}
 
 /*pannel*/
 .uk-panel-box{background:none;}
@@ -155,9 +157,9 @@ border-radius:5px;
 
 }
 
-.square_local{margin-left:38px;width:280px;}
+.square_local{margin-left:35px;width:70%;}
   .square{
-    width:280px;height:280px;position:relative; 
+    width:100%;height:100%;position:relative; 
     
     transform:rotate(45deg); 
     -webkit-transform:rotate(45deg); 
@@ -167,14 +169,14 @@ border-radius:5px;
     -webkit-animation:rotate infinite linear 5s;margin:0 auto;
     -moz-animation:rotate infinite linear 5s;margin:0 auto;
   }
-  .rect{width:280px;height:140px;position:relative;border:1px #d2d2d2 solid;border-bottom:none;}
-  .inner_circle{width:140px;height:140px;border-radius:140px;position:absolute;z-index:1;}
-  .dot{width:35px;height:35px;position:absolute;left:0;right:0;top:0;bottom:0;margin:auto;border-radius:50%;}
-  .rect_one{border-radius:140px 140px 0 0;background:white;}
-  .rect_one_one{bottom:-70px;left:0;background:black;}
+  .rect{width:100%;height:50%;position:relative;border:1px #d2d2d2 solid;border-bottom:none;}
+  .inner_circle{width:50%;height:100%;border-radius:100%;position:absolute;z-index:1;}
+  .dot{width:12.5%;height:12.5%;position:absolute;left:0;right:0;top:0;bottom:0;margin:auto;border-radius:50%;}
+  .rect_one{background:white;}
+  .rect_one_one{bottom:-50%;left:0;background:black;}
   .rect_one_two{background:white;}
-  .rect_two{border-radius:0 0 140px 140px;background:black;}
-  .rect_two_one{bottom:70px;right:0;background:white;}
+  .rect_two{background:black;}
+  .rect_two_one{bottom:50%;right:0;background:white;}
   .rect_two_two{background:black;}
   @keyframes rotate{
     from{
