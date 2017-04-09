@@ -17,6 +17,7 @@ body{background:#e8eacc;padding: 0;
 
 /*content*/
 .sblog-left-body{
+	line-height:25px;font-size:15px;font-weight:400;
 box-shadow:
     0px 0px #587,
     1px 1px #698,
@@ -30,11 +31,16 @@ box-shadow:
 }
 
 .sblog-middle{padding-top:40px;}
+.sblog-content{padding-top:20px;}
 .sblog-drawer-btn{position:fixed;top:40px;}
 .uk-article-list{}
  .uk-article-list .uk-article-lead a{color:#587;text-shadow:1px 1px #eee,-1px -1px #444; font-family:"微软雅黑"}
  .uk-article-list .uk-article-lead a:hover {color:#ddd;font-size:20px;text-decoration:none;}
-.sblog-uk-block{padding-left:5px;padding-top:15px;padding-bottom:10px;background:rgba(242, 244, 214, 1);}
+.sblog-uk-block{padding-left:5px;padding-top:15px;padding-bottom:10px;background:rgba(242, 244, 214, 1);
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3),
+		1px -1px 1px rgba(0, 0, 0, 0.3),
+		-1px 1px 1px rgba(0, 0, 0, 0.3),
+        -1px -1px 1px rgba(0, 0, 0, 0.3);}
 .sblog-uk-block:hover {}
 
 .sblog-block-delver {height:10px;width:100%;}
@@ -54,7 +60,12 @@ box-shadow:
 
 em a{color:red;}
 em a:hover {color:red; font-size:25px;}
-
+/**
+ */
+.uk-comment-sblog {border-bottom:1px #fff solid;
+    box-shadow:1px 1px #eee,-1px -1px #aaa;
+}
+.uk-comment-sblog .uk-comment-header{}
 /*footer*/
 .sblog-footer {background-color:#333;color:#eee;}
 .sblog-footer a {color:#eee}
@@ -108,30 +119,24 @@ overflow:hidden; line-height:100px;font-size:100px;text-align:center;}
         -5px 5px 0 #609a8c,   
         0px 0px 0 #b0eadc,   
         1px 1px 0 #476,   
-        2px 2px 0 #476,   
-        3px 3px 0 #476,   
         -5px 5px 5px rgba(5, 7, 6, 0.5),   
         -5px 5px 1px rgba(5, 7, 6, 0.5),
-        3px 5px 1px rgba(7, 7, 6, 0.5),   
-        3px 5px 1px rgba(7, 7, 6, 0.5);  
+        1px 5px 1px rgba(7, 7, 6, 0.5),   
+        1px 5px 1px rgba(7, 7, 6, 0.5);  
 
 }
 /*specail block 
 border-radius:5px;
 */
-.sblog-uk-block{
+.sblog-content{
     box-shadow:
-        0px 0px 0 #b89800,   
-        -1px -1px 0 #b39400,   
-        -2px -2px 0 #ad8f00,   
-        -3px -3px 0 #a88b00,   
-        -4px -4px 0 #a38700,   
-        -5px -5px 0 #9e8300,   
-        -6px -6px 0 #997f00,   
-        -7px -7px 0 #947a00,   
-        -8px -8px 0 #8f7600,   
-        -8px -8px 8px rgba(0, 0, 0, 0.55),   
-        -8px -8px 1px rgba(0, 0, 0, 0.5);  
+        0px 0px 0 #e8eacc,   
+        0px -1px 0 #c8caac,   
+        0px -2px 0 #b8ba9c,   
+        0px -3px 0 #a8aa8c,   
+        0px -4px 0 #989a7c,   
+        0px -4px 4px rgba(7, 7, 5, 0.3),   
+        0px -4px 1px rgba(7, 7, 5, 0.3);  
 }
 /**/
 .uk-navbar-bg{

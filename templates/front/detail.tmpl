@@ -3,7 +3,7 @@
 
 <div class="sblog-middle .uk-width-*">
 
-		<div class="uk-grid uk-grid-collapse">
+		<div class="uk-grid uk-grid-collapse sblog-content">
 			<!-- ##BEGIN left body-->
       <div class="uk-width-7-10 sblog-left-body">
         <div class="uk-width-9-10 uk-container-center">
@@ -24,6 +24,25 @@
             <li class="uk-pagination-previous uk-width-2-10"><a href="/?page={{  .prepage}}"><i class="uk-icon-angle-double-left"></i> Prev</a></li>
 						<li class="uk-pagination-next uk-width-2-10"><a href="/?page={{ .nextpage}}">Next <i class="uk-icon-angle-double-right"></i></a></li>
 					</ul>
+					<p class=" sblog_block-deliver"></p>
+
+<section id="sblog-comments">
+        <ul class="uk-comment-list">
+            <li>
+            <article class="uk-comment uk-comment-sblog">
+                <header class="uk-comment-header">
+                    <img class="uk-comment-avatar" src="{{.setting.asset_path}}images/placeholder_avatar.svg" width="50" height="50" alt="">
+                    <h4 class="uk-comment-title">Author</h4>
+                    <div class="uk-comment-meta">12 days ago | Profile | #</div>
+                </header>
+                <div class="uk-comment-body">
+                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+                </div>
+            </article>
+            </li>
+        </ul>
+</section>
+
 					<p class=" sblog_block-deliver"></p>
         </div>
       </div>
