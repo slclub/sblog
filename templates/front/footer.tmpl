@@ -14,7 +14,34 @@
 <!-- ## footer-->
 <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script  type="text/javascript"src="//cdn.bootcss.com/uikit/2.25.0/js/uikit.js"></script>
-<script  type="text/javascript"src="//cdn.bootcss.com/uikit/2.25.0/js/components/search.js"></script>
+<!--<script  type="text/javascript"src="//cdn.bootcss.com/uikit/2.25.0/js/components/search.js"></script>-->
     </body>
+<script>
+$(function(){
+    $('.uk-search-field').on('keydown',function(event){  
+      //判断当event.keyCode 为37时（即左方面键），执行函数to_left();  
+      //判断当event.keyCode 为39时（即右方面键），执行函数to_right();  
+
+      if(event.keyCode == 13){  
+        sblog.search();
+      }  
+    }); 
+
+    var sblog = function(){
+        
+    }
+    
+    sblog.search = function(){
+        var elv = $('.uk-search-field').val()
+        if (!elv) {
+            return
+        }
+        var url = "?search="+elv;
+        $(window).attr('location', url);
+    }
+    
+})
+
+</script>
 <html>
 {{end}}

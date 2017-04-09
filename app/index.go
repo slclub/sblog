@@ -18,13 +18,17 @@ var Index gin.HandlerFunc = func(c *gin.Context) {
 	post := source.NewPost()
 
 	page, _ := strconv.Atoi(c.Query("page"))
+	search := c.Query("search")
+
+	fwhere, fbind := BindFind("search", search)
+
 	if page <= 0 {
 		page = 1
 	}
-	Print(uint(page))
 	post.Limit(0, 20)
+
 	post.Page(uint(page))
-	ret := post.Find(post, "", []interface{}{})
+	ret := post.Find(post, fwhere, fbind)
 
 	for posti, postv := range ret {
 		postvv := postv.(map[string]interface{})
@@ -35,9 +39,6 @@ var Index gin.HandlerFunc = func(c *gin.Context) {
 		ret[posti] = postvv
 	}
 
-	//Print(ret)
-
-	Print(Setting("all"))
 	c.HTML(http.StatusOK, "index.tmpl", gin.H{
 		"content":  "Hello world",
 		"postList": ret,
@@ -52,4 +53,16 @@ func init() {
 }
 
 var Page = func() {
+}
+
+var BindFind = func(fld string, val interface{}) (ret string, bindArr []interface{}) {
+	bindArr = make([]interface{}, 2)
+	if fld == "search" && val != nil && val != "" {
+		ret = " (title like ? or tags like ?) "
+		valStr := val.(string)
+		bindArr[0] = "%" + valStr + "%"
+		bindArr[1] = "%" + valStr + "%"
+		return ret, bindArr
+	}
+	return ret, bindArr[:0]
 }
