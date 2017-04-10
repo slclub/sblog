@@ -8,6 +8,7 @@ import (
 	sbtext "sblog/provider/text"
 	"sblog/source"
 	"strconv"
+	"strings"
 )
 
 var ConfTitleNumber = 50
@@ -36,6 +37,7 @@ var Index gin.HandlerFunc = func(c *gin.Context) {
 		pcontent := postvv["content"].(string)
 		postvv["title"] = sbstring.Substr(ptitle, 0, ConfTitleNumber)
 		postvv["content"] = (sbtext.DeScript(sbstring.Substr(sbtext.DeHtml(pcontent), 0, ConfContentNumber)))
+		postvv["content"] = strings.Replace(postvv["content"].(string), "&nbsp;", "", -1)
 		ret[posti] = postvv
 	}
 
