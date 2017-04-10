@@ -41,7 +41,7 @@ box-shadow:
 		1px -1px 1px rgba(0, 0, 0, 0.3),
 		-1px 1px 1px rgba(0, 0, 0, 0.3),
         -1px -1px 1px rgba(0, 0, 0, 0.3);}
-.sblog-uk-block:hover {}
+.sblog-uk-block:hover {box-shadow:1px 1px #eee,-1px -1px #bbb;}
 
 .sblog-block-delver {height:10px;width:100%;}
 

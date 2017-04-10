@@ -68,6 +68,9 @@ func (post *Post) Save(value model.Modeli) {
 }
 
 func (post *Post) Create(value model.Modeli) (int, error) {
+	if post.Object["sort"] == 0 {
+		post.Object["sort"] = post.Object["modified_time"]
+	}
 	return post.Model.Create(value)
 
 }
