@@ -60,6 +60,7 @@ var PostFind gin.HandlerFunc = func(c *gin.Context) {
 
 	v, _ := strconv.Atoi(c.Query("page"))
 	post.Page(uint(v))
+	post.Fields("p_id", "title", "tags", "sort", "created_time", "modified_time")
 	ret := post.Find(post, "", []interface{}{})
 	c.JSON(200, (ret))
 }
