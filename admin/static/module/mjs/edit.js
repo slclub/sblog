@@ -56,7 +56,7 @@ layui.define(['laytpl','form', 'layedit'],function(exports){ //提示：模块�
             return self.content;
         },
         load:function(param){
-			param = param ||{}
+            param = param ||{}
             self = obj;
             form.render();
             self.render(param.ID||0)

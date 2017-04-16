@@ -105,8 +105,9 @@ layui.use(['layer', 'form','sblog_edit','sblog_op_load','sblog_post_list'],
 						return
 					}
 					var resData = res.Data
+					$.cookie('Token', null); 
 					$.cookie("Token", resData.token);
-					layer.msg("login success")
+					layer.msg("login success"+resData.token)
 					$(location).attr('href', '/back/index.html');
 				}
 			});

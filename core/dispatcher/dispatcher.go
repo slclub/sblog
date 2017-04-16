@@ -75,7 +75,9 @@ func (di *dispatcher) Handle(fn gin.HandlerFunc) gin.HandlerFunc {
 		//Begin
 		di.Deal(c, BEGIN)
 		di.Deal(c, ROUTE_FUNC)
-		fn(c)
+		if !c.IsAborted() {
+			fn(c)
+		}
 		di.Deal(c, END)
 	}
 

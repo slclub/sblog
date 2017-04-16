@@ -6,7 +6,7 @@ layui.define(['laytpl','form','laypage','sblog_edit','sblog_op_load'],function(e
         content :"",
         data_list:[],
         target:{},
-		findData:{},
+        findData:{},
         entry : function(target){
           this.target = target
         },
@@ -84,26 +84,27 @@ layui.define(['laytpl','form','laypage','sblog_edit','sblog_op_load'],function(e
 		listen:function(){
 		  //edit operation.
 		  $(".sblog_post_edit_icon").on("click", function(){
-		    var el = $(this);
-			var id = el.data("val")
-			layui.sblog_op_load.entry(sblog_body,layui.sblog_edit);
-			layui.sblog_op_load.load(null,layui.sblog_edit.load)
-			layui.sblog_edit.load({ID:id})
+          var el = $(this);
+          var id = el.data("val")
+          layui.sblog_op_load.entry(sblog_body,layui.sblog_edit);
+          //layui.sblog_op_load.load(null,layui.sblog_edit.load)
+          layui.sblog_op_load.load(null,null)
+          layui.sblog_edit.load({ID:id})
 		  });
 		  $(".sblog_post_del_icon").on("click", function(){
-			var el = $(this)
-			layui.layer.confirm("Are you sure want to delete the data?",{
-				btn:['confirm','cancel'],
-				shade:true
-			},function(index){
-				sblog.ajax({
-					url:"/sadmin/post/delete",
-					data:{ID:el.data("val")},
-					success:function(res){
-						obj.load();
-					}
-				});
-				layui.layer.close(index);
+          var el = $(this)
+          layui.layer.confirm("Are you sure want to delete the data?",{
+            btn:['confirm','cancel'],
+            shade:true
+          },function(index){
+				  sblog.ajax({
+              url:"/sadmin/post/delete",
+              data:{ID:el.data("val")},
+              success:function(res){
+                obj.load();
+              }
+				  });
+				  layui.layer.close(index);
 			});
 		  });
 		  $(".sblog_post_list_top").on("click", function(){
