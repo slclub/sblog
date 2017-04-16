@@ -101,11 +101,13 @@ layui.use(['layer', 'form','sblog_edit','sblog_op_load','sblog_post_list'],
 				data:lgData,
 				success:function(res){
 					if (res.Status != 0) {
+						layer.msg("login error"+res.message)
 						return
 					}
 					var resData = res.Data
 					$.cookie("Token", resData.token);
-					console.log(res)
+					layer.msg("login success")
+					$(location).attr('href', '/back/index.html');
 				}
 			});
 			return false;
