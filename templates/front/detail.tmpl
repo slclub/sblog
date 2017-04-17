@@ -63,7 +63,23 @@
 </div>
 <!-- ##END content -->
 <link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">  
-<script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>  
-<script >hljs.initHighlightingOnLoad();</script>  
 <!-- ## footer-->
 {{template "footer" .}}
+<script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>  
+<script >hljs.initHighlightingOnLoad();
+// lighight code
+$(function(){
+    $preEl = $("pre");
+    $preEl.attr("class","hljs php")
+    if ($preEl.length >0) {
+        $preEl.each(function(){
+            if ($(this).children("code").length){
+                return
+            }
+            var innerHtml = "<code class='hljs'>"+$(this).html()+"</code>";
+            $(this).html(innerHtml);
+        });
+    }
+});
+</script>  
+
